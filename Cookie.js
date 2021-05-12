@@ -19,34 +19,26 @@ function setCookie(e, t, o) {
 
     
 document.getElementById("consentBtn").onclick = function () {
-    window.localStorage.setItem("CB", "true"), checkSettings()
-}, 
-    
-document.getElementById("consentBtnCheck").onclick = function () {
-    window.localStorage.setItem("CB", "true"), checkSettings()
-}, 
-    
+    setCookie("CB", "true", 30), checkSettings()
+};
+        
 document.getElementById("DeleteCookies").onclick = function () {
     deletecookies()
-}, 
+}; 
     
 document.getElementById("NoCookies").onclick = function () {
     nocookies()
-}, 
-    
-document.getElementById("NoCookiesSettings").onclick = function () {
-    nocookies()
 };
-
+   
 
 var AN_cookie = getCookie("AN_DS"),
     RE_cookie = getCookie("RE_DS"),
-    alreadyLoaded = "true" === window.localStorage.getItem("CB");
+    alreadyLoaded = "true" === getCookie("CB");
 
 
 function checkSettings() {
-    document.getElementById("AN_Check").checked ? setCookie("AN_DS", "true", 999) : setCookie("AN_DS", "false", 999), 
-    document.getElementById("RE_Check").checked ? setCookie("RE_DS", "true", 999) : setCookie("RE_DS", "false", 999), 
+    document.getElementById("AN_Check").checked ? setCookie("AN_DS", "true", 30) : setCookie("AN_DS", "false", 30), 
+    document.getElementById("RE_Check").checked ? setCookie("RE_DS", "true", 30) : setCookie("RE_DS", "false", 30), 
     location.reload()
 }
 
@@ -56,7 +48,7 @@ function deletecookies() {
         var o = e[t].split("=");
         document.cookie = o[0] + "=;expires=Thu, 21 Sep 1979 00:00:01 UTC;"
     }
-    
+    setCookie("CB", "false", 30)
     localStorage.clear(), 
     location.reload()
 }
@@ -64,10 +56,10 @@ function deletecookies() {
 
 function nocookies() {
     deletecookies(), 
-    setCookie("AN_DS", "false", 999), 
-    setCookie("RE_DS", "false", 999), 
-    setCookie("NOCO", "true", 999), 
-    window.localStorage.setItem("CB", "true"), 
+    setCookie("AN_DS", "false", 30), 
+    setCookie("RE_DS", "false", 30), 
+    setCookie("NOCO", "true", 30), 
+    setCookie("CB", "true", 30)
     location.reload()
 }
 
@@ -87,4 +79,4 @@ function nocookies() {
     RE_cookie || (document.getElementById("RE_Check").checked = !0), 
 
 
-alreadyLoaded ? document.getElementById("consentPopup").style.display = "none" : (document.getElementById("consentPopup").style.display = "block") 
+alreadyLoaded ? console.log("Cookie Banner Shown") : $('#CookieButton').click(); 
